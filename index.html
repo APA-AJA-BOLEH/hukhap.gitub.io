@@ -59,22 +59,51 @@
             margin-bottom: 20px;
         }
 
+        /* Balon hanya di pojok */
         .balloon {
-            position: absolute;
-            width: 40px;
-            height: 50px;
+            position: fixed;
+            width: 60px;
+            height: 70px;
             border-radius: 50%;
             animation: float 6s ease-in-out infinite;
+            z-index: 100;
+        }
+
+        /* Posisi 4 pojok */
+        .balloon-1 { /* Kiri atas */
+            left: 20px;
+            top: 20px;
+            background-color: #e91e63;
+            animation-delay: 0s;
+        }
+        .balloon-2 { /* Kanan atas */
+            right: 20px;
+            top: 20px;
+            background-color: #4caf50;
+            animation-delay: 1s;
+        }
+        .balloon-3 { /* Kiri bawah */
+            left: 20px;
+            bottom: 20px;
+            background-color: #2196f3;
+            animation-delay: 2s;
+        }
+        .balloon-4 { /* Kanan bawah */
+            right: 20px;
+            bottom: 20px;
+            background-color: #ffeb3b;
+            animation-delay: 0.5s;
         }
 
         .balloon::before {
             content: "";
             position: absolute;
-            width: 1px;
+            width: 2px;
             height: 100px;
             background-color: #888;
             bottom: -100px;
             left: 50%;
+            transform: translateX(-50%);
         }
 
         .btn {
@@ -203,11 +232,11 @@
 </head>
 <body>
     <div class="container">
-        <!-- Balon -->
-        <div class="balloon" style="background-color: #e91e63; left: 10%; top: 50px; animation-delay: 0s;"></div>
-        <div class="balloon" style="background-color: #4caf50; left: 20%; top: 70px; animation-delay: 1s;"></div>
-        <div class="balloon" style="background-color: #2196f3; right: 15%; top: 40px; animation-delay: 2s;"></div>
-        <div class="balloon" style="background-color: #ffeb3b; right: 25%; top: 60px; animation-delay: 0.5s;"></div>
+        <!-- Balon di 4 pojok -->
+        <div class="balloon balloon-1"></div>
+        <div class="balloon balloon-2"></div>
+        <div class="balloon balloon-3"></div>
+        <div class="balloon balloon-4"></div>
         
         <h1>Selamat Ulang Tahun!</h1>
         
@@ -237,19 +266,16 @@
     <div class="easter-egg-overlay" id="easterEggOverlay">
         <div class="easter-egg-content">
             <button class="close-easter-egg" id="closeEasterEgg">×</button>
-            <img id="easterEggImage" class="easter-egg-image" src="https://raw.githubusercontent.com/APA-AJA-BOLEH/hukhap.gitub.io/refs/heads/main/name.jpg" alt="Foto Spesial">
+            <img id="easterEggImage" class="easter-egg-image" 
+                 src="https://raw.githubusercontent.com/APA-AJA-BOLEH/hukhap.gitub.io/refs/heads/main/name.jpg" 
+                 alt="Foto Spesial">
             <p>Apakah kamu masih ingat?</p>
-            <p>Thanks my ex</p>
+            <p>Thanks for evrything my ex</p>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Membuat balon tambahan secara dinamis
-            for (let i = 0; i < 10; i++) {
-                createBalloon();
-            }
-            
             // Surprise button
             const surpriseBtn = document.getElementById('surpriseBtn');
             surpriseBtn.addEventListener('click', function() {
@@ -303,19 +329,6 @@
             });
             
             // Fungsi pembantu
-            function createBalloon() {
-                const balloon = document.createElement('div');
-                balloon.className = 'balloon';
-                balloon.style.left = Math.random() * 100 + '%';
-                balloon.style.top = Math.random() * 100 + 'px';
-                balloon.style.backgroundColor = getRandomColor();
-                balloon.style.animationDelay = Math.random() * 3 + 's';
-                balloon.style.width = (Math.random() * 30 + 30) + 'px';
-                balloon.style.height = (Math.random() * 40 + 40) + 'px';
-                
-                document.body.appendChild(balloon);
-            }
-            
             function createConfetti() {
                 for (let i = 0; i < 100; i++) {
                     const confetti = document.createElement('div');
