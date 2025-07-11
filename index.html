@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffebee;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .birthday-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            margin: 20px 0;
+            position: relative;
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+        }
+
+        .birthday-card:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .cake {
+            font-size: 50px;
+            margin: 20px 0;
+            animation: bounce 1s infinite alternate;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .message {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .balloon::before {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 100px;
+            background-color: #888;
+            bottom: -100px;
+            left: 50%;
+        }
+
+        .btn {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            background-color: #c2185b;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            z-index: 1000;
+        }
+
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            border: 10px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            overflow: hidden;
+            background-color: #ffcdd2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4em;
+            color: #e91e63;
+        }
+
+        /* Easter Egg Styles */
+        .easter-egg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        .easter-egg-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .easter-egg-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 80%;
+            max-height: 80vh;
+            text-align: center;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s;
+            overflow: auto;
+        }
+
+        .easter-egg-overlay.active .easter-egg-content {
+            transform: scale(1);
+        }
+
+        .easter-egg-image {
+            max-width: 100%;
+            max-height: 60vh;
+            margin-bottom: 20px;
+            border: 5px solid #f8f8f8;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-easter-egg {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #888;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-20px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Balon -->
+        <div class="balloon" style="background-color: #e91e63; left: 10%; top: 50px; animation-delay: 0s;"></div>
+        <div class="balloon" style="background-color: #4caf50; left: 20%; top: 70px; animation-delay: 1s;"></div>
+        <div class="balloon" style="background-color: #2196f3; right: 15%; top: 40px; animation-delay: 2s;"></div>
+        <div class="balloon" style="background-color: #ffeb3b; right: 25%; top: 60px; animation-delay: 0.5s;"></div>
+        
+        <h1>Selamat Ulang Tahun!</h1>
+        
+        <div class="photo-frame">
+            🎂
+        </div>
+        
+        <div class="birthday-card">
+            <div class="cake">🎂</div>
+            <p class="message">
+                Semoga hari ulang tahunmu penuh dengan kebahagiaan, tawa, dan momen-momen indah! 
+                Semoga tahun ini membawa banyak keberuntungan, kesehatan, dan kesuksesan untukmu.
+            </p>
+            <p class="message">
+                Selamat merayakan hari spesialmu! 🎉🎈
+            </p>
+        </div>
+        
+        <button class="btn" id="surpriseBtn">Klik untuk Kejutan!</button>
+        
+        <p style="margin-top: 20px; color: #888; font-size: 0.8em;">
+            Coba klik kue 5 kali untuk Easter Egg! 😉
+        </p>
+    </div>
+
+    <!-- Easter Egg Overlay -->
+    <div class="easter-egg-overlay" id="easterEggOverlay">
+        <div class="easter-egg-content">
+            <button class="close-easter-egg" id="closeEasterEgg">×</button>
+            <img id="easterEggImage" class="easter-egg-image" src="c:\Users\Lenovo\OneDrive\Pictures\name.jpg" alt="Foto Spesial">
+            <p>Apakah kamu masih ingat?</p>
+            <p>Thanks my ex</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Membuat balon tambahan secara dinamis
+            for (let i = 0; i < 10; i++) {
+                createBalloon();
+            }
+            
+            // Surprise button
+            const surpriseBtn = document.getElementById('surpriseBtn');
+            surpriseBtn.addEventListener('click', function() {
+                // Animasi confetti
+                createConfetti();
+                
+                // Animasi cake
+                const cake = document.querySelector('.cake');
+                cake.style.transform = 'scale(1.5)';
+                cake.style.transition = 'transform 0.3s';
+                
+                setTimeout(() => {
+                    cake.style.transform = 'scale(1)';
+                    cake.textContent = getRandomEmoji();
+                }, 300);
+                
+                // Ubah warna background
+                document.body.style.backgroundColor = getRandomPastelColor();
+                
+                // Play audio
+                playBirthdaySong();
+            });
+            
+            // Easter Egg functionality
+            const cake = document.querySelector('.cake');
+            const easterEggOverlay = document.getElementById('easterEggOverlay');
+            const closeEasterEgg = document.getElementById('closeEasterEgg');
+            
+            let clickCount = 0;
+            const clicksNeeded = 5;
+            
+            cake.addEventListener('click', function() {
+                clickCount++;
+                
+                if (clickCount >= clicksNeeded) {
+                    // Show easter egg
+                    easterEggOverlay.classList.add('active');
+                    clickCount = 0;
+                }
+            });
+            
+            closeEasterEgg.addEventListener('click', function() {
+                easterEggOverlay.classList.remove('active');
+            });
+            
+            // Close when clicking outside content
+            easterEggOverlay.addEventListener('click', function(e) {
+                if (e.target === easterEggOverlay) {
+                    easterEggOverlay.classList.remove('active');
+                }
+            });
+            
+            // Fungsi pembantu
+            function createBalloon() {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = Math.random() * 100 + '%';
+                balloon.style.top = Math.random() * 100 + 'px';
+                balloon.style.backgroundColor = getRandomColor();
+                balloon.style.animationDelay = Math.random() * 3 + 's';
+                balloon.style.width = (Math.random() * 30 + 30) + 'px';
+                balloon.style.height = (Math.random() * 40 + 40) + 'px';
+                
+                document.body.appendChild(balloon);
+            }
+            
+            function createConfetti() {
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = getRandomColor();
+                    confetti.style.animation = `confetti-fall ${Math.random() * 3 + 2}s linear forwards`;
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }
+            }
+            
+            function getRandomColor() {
+                const colors = ['#e91e63', '#9c27b0', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+            
+            function getRandomPastelColor() {
+                const hue = Math.floor(Math.random() * 360);
+                return `hsl(${hue}, 100%, 90%)`;
+            }
+            
+            function getRandomEmoji() {
+                const emojis = ['🎂', '🎉', '🎈', '🎁', '🎊', '✨', '🥳', '👑', '💝', '❤️'];
+                return emojis[Math.floor(Math.random() * emojis.length)];
+            }
+            
+            function playBirthdaySong() {
+                const audio = new Audio('https://www.soundjay.com/human/sounds/happy-birthday-01.mp3');
+                audio.play().catch(e => console.log("Autoplay prevented: " + e));
+            }
+        });
+    </script>
+</body>
+</html>
